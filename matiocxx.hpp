@@ -28,18 +28,17 @@ namespace matio{
         const T*                 data;
         matio_classes            classtype;
         matio_types              datatype;
-        int                      option; //Extra options param fro C-MATIO
+        int                      option = 0; //Extra options param fro C-MATIO
 
     public:
         matvar(const std::string&               _variable_name,
                const std::vector<std::size_t>&  _dimensions,
                const T* const                   _data,
                matio_classes                    _classtype,
-               matio_types                      _datatype):
+               matio_types                      _datatype,
+               int                              _option):
             variable_name(_variable_name), dimensions(_dimensions), data(_data),
-            classtype(_classtype), datatype(_datatype)  {
-            option = 0;
-        }; //Default constructor.
+            classtype(_classtype), datatype(_datatype), option(_option) {}; //Default constructor.
 
         //Constructor for Integer type. _T is only used to determine type.
         template<typename T_=T,
@@ -58,16 +57,9 @@ namespace matio{
                const T* const                   _data);
 
         matvar_t* get_varp() const { //Returns the pointer to a matvar_t.
-            std::size_t      rank = dimensions.size();
-            std::size_t* temp_dim = new std::size_t[rank];
-
-            std::copy(dimensions.begin(),dimensions.end(),temp_dim);
-            matvar_t* temp = Mat_VarCreate
-                (variable_name.c_str(),classtype,datatype,rank,temp_dim
-                 ,const_cast<T*>(data),option);
-
-            delete[] temp_dim;
-            return temp;
+            return Mat_VarCreate
+                (variable_name.c_str(),classtype,datatype,dimensions.size(),
+                 const_cast<std::size_t*>(dimensions.data()),const_cast<T*>(data),option);
         }
     };  //end class matvar
 

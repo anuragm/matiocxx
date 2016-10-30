@@ -2,7 +2,7 @@ all: matioCPP_test
 
 HPP_FILES:= *.hpp
 LD_FLAGS += `pkg-config --libs --cflags matio`
-CC_FLAGS := -O3 -std=c++14 -Wall -Wextra -pedantic -march=native
+CC_FLAGS := -O3 -std=c++14 -Wall -Wextra -pedantic -march=native -flto
 
 %.o: %.cpp $(HPP_FILES)
 	$(CXX) $(CC_FLAGS) $(IFLAGS) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<

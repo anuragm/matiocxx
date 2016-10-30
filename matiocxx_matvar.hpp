@@ -30,6 +30,7 @@ matvar<T>::matvar (const std::string&               _variable_name,
         datatype = static_cast<matio_types>(static_cast<int>(datatype)+1) ;
 
     classtype = MAT_C_DOUBLE;
+    option    = 0; //0 as this is not complex or something.
 }
 
 //Constructor for Floating type.
@@ -51,6 +52,7 @@ matvar<T>::matvar (const std::string&               _variable_name,
     }
 
     classtype = MAT_C_DOUBLE;
+    option    = 0;
 }
 
 #endif
