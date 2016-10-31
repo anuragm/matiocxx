@@ -13,6 +13,7 @@ extern "C"{
 #include <type_traits> //For template specialization.
 #include <climits>
 #include <limits>
+#include <armadillo>
 
 namespace matio{
 
@@ -26,9 +27,16 @@ namespace matio{
         std::string              variable_name;
         std::vector<std::size_t> dimensions;
         const T*                 data;
+
         matio_classes            classtype;
         matio_types              datatype;
         int                      option = 0; //Extra options param fro C-MATIO
+
+        template<typename T_=T,
+                 typename std::enable_if_t
+                 <std::is_integral<T_>::value || std::is_floating_point<T_>::value>* = nullptr
+                 >
+        void set_matio_types();
 
     public:
         matvar(const std::string&               _variable_name,
@@ -55,6 +63,20 @@ namespace matio{
         matvar(const std::string&               _variable_name,
                const std::vector<std::size_t>&  _dimensions,
                const T* const                   _data);
+
+        //Special constructors.
+
+        //Constructor for arma::mat
+        matvar(const std::string&   _variable_name,
+               const arma::Mat<T>&  _data);
+
+        //Constructor for std::vector
+        matvar(const std::string&   _variable_name,
+               const std::vector<T>& _data);
+
+        //Constructor for const char*. Complain otherwise.
+        matvar(const std::string& _variable_name,
+               const T*           _data);
 
         matvar_t* get_varp() const { //Returns the pointer to a matvar_t.
             return Mat_VarCreate
