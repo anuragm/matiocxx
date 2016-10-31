@@ -22,7 +22,7 @@ void matvar<T>::set_matio_types(){
             datatype = MAT_T_INT8;
             break;
         default :
-        case 64:
+        case 64 :
             datatype = MAT_T_INT64;
         }
 
@@ -37,7 +37,7 @@ void matvar<T>::set_matio_types(){
             datatype = MAT_T_SINGLE;
             break;
         default :
-        case 64:
+        case 64 :
             datatype = MAT_T_DOUBLE;
         }
     }

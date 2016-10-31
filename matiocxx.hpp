@@ -85,7 +85,7 @@ namespace matio{
         }
     };  //end class matvar
 
-    #include "matiocxx_matvar.hpp"
+    #include "matiocxx_bits/matiocxx_matvar.hpp"
 
     class matfile{
     private:
@@ -114,7 +114,7 @@ namespace matio{
         void write(); //Write to disk.
     }; //end of matfile.
 
-    #include "matiocxx_matfile.hpp"
+    #include "matiocxx_bits/matiocxx_matfile.hpp"
 }
 
 #endif /* MATIOCXX_H */
