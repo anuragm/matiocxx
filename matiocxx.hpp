@@ -78,6 +78,10 @@ namespace matio{
         matvar(const std::string& _variable_name,
                const T*           _data);
 
+        //Constructor for single data point.
+        matvar(const std::string& _variable_name,
+               const T&           _data);
+
         matvar_t* get_varp() const { //Returns the pointer to a matvar_t.
             return Mat_VarCreate
                 (variable_name.c_str(),classtype,datatype,dimensions.size(),

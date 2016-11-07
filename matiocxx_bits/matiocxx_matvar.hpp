@@ -9,6 +9,14 @@ template<typename T_,
          >
 void matvar<T>::set_matio_types(){
 
+    if(std::is_same<T,char>::value){ //Set the value to single char.
+        option      = 0;
+        classtype   = MAT_C_CHAR;
+        datatype    = MAT_T_UINT8;
+        return;
+    }
+
+    //(unsigned)signed char are treated as (u)int8
     if (std::is_integral<T_>::value){ //Set value for integer types.
         //Set class type and data type to appropriate values.
         switch( sizeof(T)*CHAR_BIT ){
@@ -100,6 +108,17 @@ matvar<T>::matvar(const std::string& _variable_name,
     classtype   = MAT_C_CHAR;
     datatype    = MAT_T_UINT8;
     dimensions  = {1,std::char_traits<char>::length(data)};
+}
+
+//Constructor for single data point.
+template<typename T>
+matvar<T>::matvar(const std::string& _variable_name,
+                  const T&           _data):
+    variable_name(_variable_name), data(&_data){
+
+    dimensions = {1,1};
+    option     =  0;
+    set_matio_types();
 }
 
 #endif
