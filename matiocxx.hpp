@@ -30,7 +30,8 @@ namespace matio{
 
         matio_classes            classtype;
         matio_types              datatype;
-        int                      option = 0; //Extra options param fro C-MATIO
+        int                      option = 0; //Extra options param for C-MATIO. See
+                                             //documentation of Mat_VarCreate.
 
         template<typename T_=T,
                  typename std::enable_if_t
@@ -116,6 +117,11 @@ namespace matio{
         }
 
         void write(); //Write to disk.
+        template <typename T>
+        arma::Mat<T> read_matrix(std::string) const;
+        template <typename T>
+        T read_value(std::string) const;
+
     }; //end of matfile.
 
     #include "matiocxx_bits/matiocxx_matfile.hpp"
